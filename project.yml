@@ -1,0 +1,113 @@
+name: Dopagaki
+options:
+  bundleIdPrefix: com.wataru
+  deploymentTarget:
+    iOS: "16.0"
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    CODE_SIGN_STYLE: Automatic
+    DEVELOPMENT_TEAM: ""
+
+targets:
+  Dopagaki:
+    type: application
+    platform: iOS
+    sources: [Dopagaki, Shared]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.wataru.dopagaki
+    entitlements:
+      path: Dopagaki/Dopagaki.entitlements
+      properties:
+        com.apple.developer.family-controls: true
+        com.apple.security.application-groups: [group.com.wataru.dopagaki]
+    info:
+      path: Dopagaki/Info.plist
+      properties:
+        CFBundleDisplayName: Dopagaki
+        UILaunchScreen: {}
+    dependencies:
+      - target: ShieldConfiguration
+      - target: ShieldAction
+      - target: DeviceActivityMonitor
+      - target: DeviceActivityReport
+
+  ShieldConfiguration:
+    type: app-extension
+    platform: iOS
+    sources: [ShieldConfiguration, Shared]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.wataru.dopagaki.ShieldConfiguration
+    entitlements:
+      path: ShieldConfiguration/ShieldConfiguration.entitlements
+      properties:
+        com.apple.developer.family-controls: true
+        com.apple.security.application-groups: [group.com.wataru.dopagaki]
+    info:
+      path: ShieldConfiguration/Info.plist
+      properties:
+        CFBundleDisplayName: ShieldConfiguration
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.ManagedSettingsUI.shield-configuration-service
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).ShieldConfigurationExtension
+
+  ShieldAction:
+    type: app-extension
+    platform: iOS
+    sources: [ShieldAction, Shared]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.wataru.dopagaki.ShieldAction
+    entitlements:
+      path: ShieldAction/ShieldAction.entitlements
+      properties:
+        com.apple.developer.family-controls: true
+        com.apple.security.application-groups: [group.com.wataru.dopagaki]
+    info:
+      path: ShieldAction/Info.plist
+      properties:
+        CFBundleDisplayName: ShieldAction
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.ManagedSettings.shield-action-service
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).ShieldActionExtension
+
+  DeviceActivityMonitor:
+    type: app-extension
+    platform: iOS
+    sources: [DeviceActivityMonitor, Shared]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.wataru.dopagaki.DeviceActivityMonitor
+    entitlements:
+      path: DeviceActivityMonitor/DeviceActivityMonitor.entitlements
+      properties:
+        com.apple.developer.family-controls: true
+        com.apple.security.application-groups: [group.com.wataru.dopagaki]
+    info:
+      path: DeviceActivityMonitor/Info.plist
+      properties:
+        CFBundleDisplayName: DeviceActivityMonitor
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.deviceactivity.monitor-extension
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).DeviceActivityMonitorExtension
+
+  DeviceActivityReport:
+    type: app-extension
+    platform: iOS
+    sources: [DeviceActivityReport, Shared]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.wataru.dopagaki.DeviceActivityReport
+    entitlements:
+      path: DeviceActivityReport/DeviceActivityReport.entitlements
+      properties:
+        com.apple.developer.family-controls: true
+        com.apple.security.application-groups: [group.com.wataru.dopagaki]
+    info:
+      path: DeviceActivityReport/Info.plist
+      properties:
+        CFBundleDisplayName: DeviceActivityReport
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.deviceactivityui.report-extension
